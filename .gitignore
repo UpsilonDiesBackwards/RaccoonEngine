@@ -1,0 +1,42 @@
+# CLion project files
+.idea/
+
+# Compiled object files and build directory
+cmake-build-debug/
+CMakeFiles/
+CMakeCache.txt
+
+# Compiled binaries
+*.exe
+*.out
+
+# Compiled libraries
+*.lib
+*.dll
+*.so
+
+# macOS .DS_Store files
+.DS_Store
+
+# Visual Studio Code settings
+.vscode/
+
+# User-specific settings
+*.iml
+*.ipr
+*.iws
+*.xml
+
+# Compiled extensions
+*.o
+*.a
+
+# Compiled shared object files
+*.so
+
+# Build artifacts
+build/
+
+# Ignore assets
+assets/
+
