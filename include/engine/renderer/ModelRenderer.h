@@ -15,4 +15,4 @@ public:
     void Render(const std::vector<Mesh>& meshes);
 };
 
-#endif RACCOONENGINE_MODELRENDERER_H
+#endif // RACCOONENGINE_MODELRENDERER_H

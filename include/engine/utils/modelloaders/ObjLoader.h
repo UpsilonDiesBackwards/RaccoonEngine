@@ -22,4 +22,4 @@ public:
     const std::vector<Mesh>& GetMeshes() const;
 };
 
-#endif RACCOONENGINE_OBJLOADER_H
+#endif // RACCOONENGINE_OBJLOADER_H
