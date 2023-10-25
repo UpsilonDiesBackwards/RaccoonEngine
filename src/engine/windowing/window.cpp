@@ -1,8 +1,10 @@
 #include <string>
 #include <deps/glad/glad.h>
 #include "engine/window.h"
+#include "engine/utils/callbacks.h"
 
 Window::Window(const std::string& title) {
+    glfwSetErrorCallback(glfw_error_callback);
     glfwInit();
 
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -34,6 +36,7 @@ void Window::Render() {
 }
 
 bool Window::ShouldClose() {
+    glfwSetWindowCloseCallback(window, glfw_window_close_callback);
     return glfwWindowShouldClose(window);
 }
 
