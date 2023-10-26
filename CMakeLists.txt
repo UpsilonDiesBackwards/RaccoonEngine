@@ -21,6 +21,8 @@ add_executable(RaccoonEngine
     include/engine/utils/modelloaders/ObjLoader.h
     src/engine/utils/modelloaders/ObjLoader.cpp
     include/engine/utils/callbacks.h
+    include/engine/gentries/Entity.h
+    src/engine/gentries/Entity.cpp
 )
 
 target_link_libraries(RaccoonEngine PRIVATE glfw assimp)

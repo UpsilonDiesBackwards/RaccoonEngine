@@ -1,20 +1,20 @@
 #include "engine/window.h"
 #include "engine/utils/modelloaders/ObjLoader.h"
 #include "engine/renderer/ModelRenderer.h"
+#include "engine/gentries/Entity.h"
 
 int main () {
-    Window window("Raccoon Engine // INDEV BUILD");
+    Window window("Raccoon Engine // INDEV BUILD // ASSET LOADING");
 
-    ObjLoader objLoader("/home/tayler/Projects/WhiskyEngine/assets/models/tree.obj");
     ModelRenderer renderer;
     renderer.Initialize();
-    const std::vector<Mesh>& meshes = objLoader.GetMeshes();
-    objLoader.Load();
+    
+    Gentry entity(entity.transform, "/home/tayler/Projects/WhiskyEngine/assets/models/tree.obj");
 
     while (!window.ShouldClose()) {
         window.PollEvents();
         
-        renderer.Render(meshes);
+        renderer.Render(entity.meshes);
 
         window.SwapBuffers();
     }
