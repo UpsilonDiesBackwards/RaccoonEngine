@@ -3,7 +3,7 @@
 
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp>
-#include "engine/renderer/ModelRenderer.h" 
+#include "engine/renderer/model_renderer.h"
 
 struct Transform {
     glm::vec3 position = {0.0f, 0.0f, 0.0f};

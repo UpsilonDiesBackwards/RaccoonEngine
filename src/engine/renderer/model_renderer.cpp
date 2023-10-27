@@ -1,10 +1,10 @@
-#include "engine/renderer/ModelRenderer.h"
+#include "engine/renderer/model_renderer.h"
 #include "deps/glad/glad.h"
 
-ModelRenderer::ModelRenderer() : VAO(0), VBO(0), EBO(0) {
+model_renderer::model_renderer() : VAO(0), VBO(0), EBO(0) {
 }
 
-void ModelRenderer::Initialize() {
+void model_renderer::Initialize() {
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
@@ -18,7 +18,7 @@ void ModelRenderer::Initialize() {
     glBindVertexArray(0);
 }
 
-void ModelRenderer::Render(const std::vector<Mesh>& meshes) {
+void model_renderer::Render(const std::vector<Mesh>& meshes) {
    glBindVertexArray(VAO);
 
    for (const Mesh& mesh : meshes) {

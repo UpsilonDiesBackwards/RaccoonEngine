@@ -1,8 +1,8 @@
-#include "engine/utils/modelloaders/ObjLoader.h"
+#include "engine/utils/modelloaders/obj_loader.h"
 
-ObjLoader::ObjLoader(const std::string& filePath) : fPath(filePath) {}
+obj_loader::obj_loader(const std::string& filePath) : fPath(filePath) {}
 
-bool ObjLoader::Load() {
+bool obj_loader::Load() {
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(fPath, aiProcess_Triangulate | aiProcess_FlipUVs);
     
@@ -34,6 +34,6 @@ bool ObjLoader::Load() {
     return true;
 }
 
-const std::vector<Mesh>& ObjLoader::GetMeshes() const {
+const std::vector<Mesh>& obj_loader::GetMeshes() const {
     return meshes;
 }

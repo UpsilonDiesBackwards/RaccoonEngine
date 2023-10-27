@@ -1,4 +1,4 @@
-#include "engine/renderer/ShaderCompiler.h"
+#include "engine/renderer/shader_compiler.h"
 #include "deps/glad/glad.h"
 
 Shader::Shader(const char* vPath, const char* fPath) {

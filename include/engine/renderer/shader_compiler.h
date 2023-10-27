@@ -1,5 +1,5 @@
-#ifndef RACCOONENGINE_SHADERCOMPILER_H
-#define RACCOONENGINE_SHADERCOMPILER_H
+#ifndef RACCOONENGINE_SHADER_COMPILER_H
+#define RACCOONENGINE_SHADER_COMPILER_H
 
 #include <string>
 #include <fstream>
@@ -18,4 +18,4 @@ public:
     void setFloat(const std::string& name, float value) const;
 };
 
-#endif /* RACCOONENGINE_SHADERCOMPILER_H  */
+#endif /* RACCOONENGINE_SHADER_COMPILER_H  */
