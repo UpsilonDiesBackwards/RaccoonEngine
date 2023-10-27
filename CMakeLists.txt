@@ -23,6 +23,8 @@ add_executable(RaccoonEngine
     include/engine/utils/callbacks.h
     include/engine/gentries/Entity.h
     src/engine/gentries/Entity.cpp
+    include/editor/Scene.h
+    src/editor/Scene.cpp
 )
 
 target_link_libraries(RaccoonEngine PRIVATE glfw assimp)

@@ -15,9 +15,10 @@ struct Transform {
 
 class Gentry {
 public:
+    std::string& name;
     Transform transform;
     std::vector<Mesh> meshes;
-    Gentry(const Transform& transform, const std::string& fPath);
+    Gentry(const Transform& transform, const std::string& fPath, std::string& name);
 };
 
 #endif // RACCOONENGINE_ENTITY_H
