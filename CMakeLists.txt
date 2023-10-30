@@ -16,8 +16,6 @@ add_executable(RaccoonEngine
     src/engine/windowing/window.cpp
         include/engine/renderer/shader_compiler.h
         src/engine/renderer/shader_compiler.cpp
-        include/engine/renderer/model_renderer.h
-        src/engine/renderer/model_renderer.cpp
         include/engine/utils/modelloaders/obj_loader.h
         src/engine/utils/modelloaders/obj_loader.cpp
     include/engine/utils/callbacks.h
@@ -26,6 +24,9 @@ add_executable(RaccoonEngine
         include/editor/scene.h
         src/editor/scene.cpp
         src/engine/input_manager.cpp
+        src/editor/viewport.cpp
+        src/engine/renderer/model_renderer.cpp
+        include/engine/renderer/model_renderer.h
 )
 
 target_link_libraries(RaccoonEngine PRIVATE glfw assimp)

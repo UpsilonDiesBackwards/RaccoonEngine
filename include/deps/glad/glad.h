@@ -846,7 +846,7 @@ typedef void (APIENTRY *GLVULKANPROCNV)(void);
 #define GL_FUNC_ADD 0x8006
 #define GL_FUNC_REVERSE_SUBTRACT 0x800B
 #define GL_FUNC_SUBTRACT 0x800A
-#define GL_MIN 0x8007vertices.size()
+#define GL_MIN 0x8007
 #define GL_MAX 0x8008
 #define GL_BUFFER_SIZE 0x8764
 #define GL_BUFFER_USAGE 0x8765

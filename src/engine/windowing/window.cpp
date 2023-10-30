@@ -2,6 +2,7 @@
 #include <deps/glad/glad.h>
 #include "engine/window.h"
 #include "engine/utils/callbacks.h"
+#include <iostream>
 
 Window::Window(const std::string& title) {
     glfwSetErrorCallback(glfw_error_callback);
@@ -54,6 +55,16 @@ void Window::SetSizeCallback(GLFWwindowsizefun callback) {
 
 float Window::AspectRatio() {
     return aspectRatio;
+}
+
+void Window::updateDeltaTime() {
+    double currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrameTime;
+    lastFrameTime = currentFrame;
+}
+
+double Window::getDeltaTime() const {
+    return deltaTime;
 }
 
 glm::vec2 Window::DisplaySize() {
