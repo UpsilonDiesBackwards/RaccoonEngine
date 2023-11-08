@@ -5,8 +5,11 @@
 #include "editor/scene.h"
 #include <cstdio>
 #include <iostream>
+#include <glm/ext/matrix_clip_space.hpp>
 #include "engine/input_manager.h"
 #include "engine/utils/callbacks.h"
+#include "editor/viewport.h"
+#include "engine/renderer/shader_compiler.h"
 #include "editor/viewport.h"
 #include "engine/renderer/shader_compiler.h"
 
@@ -16,6 +19,16 @@ int main () {
     InputManager& inputManager = InputManager::getInstance();
     inputManager.setWindow(window.GetGLFWWindow());
     Viewport viewport(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
+
+    Viewport viewport(glm::vec3(0, 0, 3), glm::vec3(1, 1, 1), -90, 0);
+
+    Shader shader("/home/tayler/Projects/RaccoonEngine/assets/shaders/default.vert",
+                  "/home/tayler/Projects/RaccoonEngine/assets/shaders/default.frag");
+
+    Viewport viewport(glm::vec3(0, 0, 3), glm::vec3(1, 1, 1), -90, 0);
+
+    Shader shader("/home/tayler/Projects/RaccoonEngine/assets/shaders/default.vert",
+                  "/home/tayler/Projects/RaccoonEngine/assets/shaders/default.frag");
 
     model_renderer renderer;
     renderer.Initialize();
@@ -30,24 +43,30 @@ int main () {
 
     nScene.AddEntity(Tree);
 //    nScene.AddEntity(Plane);
+//    nScene.AddEntity(Plane);
 
     nScene.SaveScene("DefaultScene.rcsc");
 
     nScene.LoadScene("DefaultScene.rcsc");
-    window.updateDeltaTime();
+
+    glm::mat4 perspective = glm::perspective(glm::radians(45.0f), window.AspectRatio(), 0.1f, 100.0f);
 
     while (!window.ShouldClose()) {
+        window.updateDeltaTime();
 
-        viewport.processMouse(inputManager.getMouseX(), inputManager.getMouseY(), true);
+        glfwSetInputMode(window.GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
         viewport.processKeyboard(inputManager, window.getDeltaTime());
+        viewport.processMouse(inputManager.getMouseX(), inputManager.getMouseY());
+//        std::cout << "X: " << inputManager.getMouseX()  << " Y: " << inputManager.getMouseY()<< "\n";
 
         if (inputManager.isKeyDown((GLFW_KEY_ESCAPE))) {
-            glfw_window_close_callback(window.GetGLFWWindow());
+            glfwSetWindowShouldClose(window.GetGLFWWindow(), GLFW_TRUE);
         }
 
+        window.Render();
         for (const Gentry& entity : nScene.GetEntities()) {
-            renderer.Render(const_cast<Gentry &>(entity), shader, viewport,
-                            glm::perspective(glm::radians(45.0f), window.AspectRatio(), 0.1f, 100.0f));
+            renderer.Render(const_cast<Gentry &>(entity), shader, viewport, perspective);
         }
 
         inputManager.update();

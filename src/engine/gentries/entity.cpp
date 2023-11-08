@@ -11,10 +11,16 @@ Gentry::Gentry(const Transform& transform, const std::string& fPath, std::string
     meshes = objLoader.GetMeshes();
 }
 
-const glm::mat4 Gentry::GenerateModelMatrix() {
+const glm::mat4 *Gentry::GenerateModelMatrix() {
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+
     modelMatrix = glm::translate(modelMatrix, transform.position);
-    modelMatrix = glm::rotate(modelMatrix, glm::radians(90.0f), transform.eulerRotation);
+    modelMatrix = glm::rotate(modelMatrix, glm::radians(45.0f), transform.eulerRotation);
     modelMatrix = glm::scale(modelMatrix, transform.scale);
 
-    return modelMatrix;
+    // Other debug prints
+
+    this->modelMatrix = modelMatrix;
+
+    return &this->modelMatrix;
 }

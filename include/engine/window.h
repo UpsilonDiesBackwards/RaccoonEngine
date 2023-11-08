@@ -9,9 +9,7 @@ class Window {
 private:
     GLFWwindow* window;
     float aspectRatio;
-
-    double lastFrameTime = glfwGetTime();
-    float deltaTime;
+    float lastFrameTime;
 public:
     Window(const std::string& title);
     ~Window();
@@ -27,8 +25,9 @@ public:
     glm::vec2 DisplaySize();
     glm::vec2 FrameBufferSize();
 
+    float deltaTime;
+    float getDeltaTime() const;
     void updateDeltaTime();
-    double getDeltaTime() const;
 };
 
 #endif //RACCOONENGINE_WINDOW_H

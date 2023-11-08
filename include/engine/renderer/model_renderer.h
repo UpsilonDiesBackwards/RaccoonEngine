@@ -1,7 +1,9 @@
 #ifndef RACCOONENGINE_MODEL_RENDERER_H
 #define RACCOONENGINE_MODEL_RENDERER_H
 
-#include <glm/glm.hpp>
+#include <vector>
+#include <glm/fwd.hpp>
+#include "engine/utils/modelloaders/obj_loader.h"
 
 class Gentry;
 class Shader;
@@ -15,7 +17,7 @@ private:
 public:
     model_renderer();
     void Initialize();
-    void Render(Gentry &gentry, Shader &shader, Viewport &viewport, const glm::mat4 &projection) const;
+    void Render(Gentry &gentry, Shader &shader, Viewport &viewport, glm::mat4 &projection) const;
 };
 
 #endif //RACCOONENGINE_MODEL_RENDERER_H

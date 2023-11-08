@@ -108,6 +108,6 @@ void scene::LoadScene(const std::string& filePath) {
         Gentry nGentry(transform, "", (std::string &) "");
         sceneEntities.push_back(nGentry);
 
-        printf("Loaded scene: %s", name.c_str());
+        printf("\nLoaded scene: %s", name.c_str());
     }
 }

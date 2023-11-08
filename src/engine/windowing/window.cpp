@@ -1,5 +1,6 @@
 #include <string>
 #include <deps/glad/glad.h>
+#include <iostream>
 #include "engine/window.h"
 #include "engine/utils/callbacks.h"
 #include <iostream>
@@ -20,8 +21,9 @@ Window::Window(const std::string& title) {
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
-    
+
     aspectRatio = static_cast<float>(mode->width) / static_cast<float>(mode->height);
+    lastFrameTime = static_cast<float>(glfwGetTime());
 
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 }
@@ -30,10 +32,10 @@ Window::~Window() {
     glfwDestroyWindow(window);
     glfwTerminate();
 }
- 
+
 void Window::Render() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.19f, 0.28f, 0.27f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 bool Window::ShouldClose() {
@@ -81,4 +83,14 @@ glm::vec2 Window::FrameBufferSize() {
 
 GLFWwindow* Window::GetGLFWWindow() {
     return window;
+}
+
+void Window::updateDeltaTime() {
+    double currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrameTime;
+    lastFrameTime = currentFrame;
+}
+
+float Window::getDeltaTime() const {
+    return deltaTime;
 }

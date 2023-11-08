@@ -12,6 +12,7 @@ private:
     void checkCompileErrors(unsigned int shader, std::string type);
 public:
     Shader(const char* vPath, const char* fPath);
+    unsigned int ID;
     void Use();
     void setBool(const std::string& name, bool value) const;
     void setInt(const std::string& name, int value) const;
