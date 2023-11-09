@@ -65,7 +65,7 @@ void Window::updateDeltaTime() {
     lastFrameTime = currentFrame;
 }
 
-double Window::getDeltaTime() const {
+float Window::getDeltaTime() const {
     return deltaTime;
 }
 
@@ -83,14 +83,4 @@ glm::vec2 Window::FrameBufferSize() {
 
 GLFWwindow* Window::GetGLFWWindow() {
     return window;
-}
-
-void Window::updateDeltaTime() {
-    double currentFrame = glfwGetTime();
-    deltaTime = currentFrame - lastFrameTime;
-    lastFrameTime = currentFrame;
-}
-
-float Window::getDeltaTime() const {
-    return deltaTime;
 }

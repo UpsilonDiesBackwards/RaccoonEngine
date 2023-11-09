@@ -25,6 +25,7 @@ add_executable(RaccoonEngine
         src/editor/scene.cpp
         src/engine/input_manager.cpp
         src/editor/viewport.cpp
+        src/engine/renderer/model_renderer.cpp
 )
 
 target_link_libraries(RaccoonEngine PRIVATE glfw assimp)

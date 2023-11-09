@@ -20,7 +20,6 @@ public:
     std::string& name;
     Transform transform;
     std::vector<Mesh> meshes;
-    Gentry(const Transform& transform, const std::string& fPath, std::string& name);
     glm::mat4 modelMatrix;
     const glm::mat4* GenerateModelMatrix();
 };
