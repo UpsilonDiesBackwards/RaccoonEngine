@@ -7,6 +7,9 @@
 #include "engine/input_manager.h"
 #include "editor/viewport.h"
 #include "engine/renderer/shader_compiler.h"
+#include "deps/imgui/imgui.h"
+#include "deps/imgui/imgui_impl_glfw.h"
+#include "deps/imgui/imgui_impl_opengl3.h"
 
 int main () {
     scene nScene("Default scene");
@@ -23,28 +26,22 @@ int main () {
 
     Transform transform1;
     Gentry Tree(transform1, "/home/tayler/Projects/WhiskyEngine/assets/models/tree.obj", (std::string &) "Tree");
-    
-//    Transform transform2;
-//    Gentry Plane(transform2, "/home/tayler/Projects/RaccoonEngine/assets/models/plane.obj", (std::string &) "Plane");
 
     nScene.AddEntity(Tree);
-//    nScene.AddEntity(Plane);
-//    nScene.AddEntity(Plane);
-
-    nScene.SaveScene("DefaultScene.rcsc");
-
-    nScene.LoadScene("DefaultScene.rcsc");
 
     glm::mat4 perspective = glm::perspective(glm::radians(45.0f), window.AspectRatio(), 0.1f, 100.0f);
 
+    window.InitializeImGui();
     while (!window.ShouldClose()) {
         window.updateDeltaTime();
 
-        glfwSetInputMode(window.GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        window.RenderImGui();
 
-        viewport.processKeyboard(inputManager, window.getDeltaTime());
-        viewport.processMouse(inputManager.getMouseX(), inputManager.getMouseY());
-        viewport.processScrollWheel(inputManager.getMouseY());
+        if (!window.GetIsImguiHover()) {
+            viewport.processKeyboard(inputManager, window.getDeltaTime());
+            viewport.processMouse(inputManager.getMouseX(), inputManager.getMouseY());
+            viewport.processScrollWheel(inputManager.getMouseY());
+        }
 
         if (inputManager.isKeyDown((GLFW_KEY_ESCAPE))) {
             glfwSetWindowShouldClose(window.GetGLFWWindow(), GLFW_TRUE);
@@ -57,9 +54,12 @@ int main () {
 
         inputManager.update();
 
+        window.RenderImGui();
+
         window.SwapBuffers();
         window.PollEvents();
     }
 
+    window.ShutdownImGui();
     return 0;
 }

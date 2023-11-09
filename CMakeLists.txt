@@ -26,6 +26,22 @@ add_executable(RaccoonEngine
         src/engine/input_manager.cpp
         src/editor/viewport.cpp
         src/engine/renderer/model_renderer.cpp
+        src/editor/imgui/imgui.cpp
+        src/editor/imgui/imgui_demo.cpp
+        src/editor/imgui/imgui_draw.cpp
+        src/editor/imgui/imgui_impl_glfw.cpp
+        src/editor/imgui/imgui_impl_opengl3.cpp
+        src/editor/imgui/imgui_tables.cpp
+        src/editor/imgui/imgui_widgets.cpp
+        include/deps/imgui/imconfig.h
+        include/deps/imgui/imgui.h
+        include/deps/imgui/imgui_impl_glfw.h
+        include/deps/imgui/imgui_impl_opengl3.h
+        include/deps/imgui/imgui_impl_opengl3_loader.h
+        include/deps/imgui/imgui_internal.h
+        include/deps/imgui/imstb_rectpack.h
+        include/deps/imgui/imstb_textedit.h
+        include/deps/imgui/imstb_truetype.h
 )
 
 target_link_libraries(RaccoonEngine PRIVATE glfw assimp)

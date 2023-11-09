@@ -3,6 +3,8 @@
 #include <iostream>
 #include "engine/window.h"
 #include "engine/utils/callbacks.h"
+#include "deps/imgui/imgui_impl_opengl3.h"
+#include "deps/imgui/imgui_impl_glfw.h"
 #include <iostream>
 
 Window::Window(const std::string& title) {
@@ -24,6 +26,8 @@ Window::Window(const std::string& title) {
 
     aspectRatio = static_cast<float>(mode->width) / static_cast<float>(mode->height);
     lastFrameTime = static_cast<float>(glfwGetTime());
+
+    isImguiHover = false;
 
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 }
@@ -83,4 +87,37 @@ glm::vec2 Window::FrameBufferSize() {
 
 GLFWwindow* Window::GetGLFWWindow() {
     return window;
+}
+
+void Window::InitializeImGui() {
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+    ImFont* customEditorFont = io.Fonts->AddFontFromFileTTF("/home/tayler/Projects/RaccoonEngine/assets/fonts/retro_gaming/RetroGaming.ttf", 18);
+    io.FontDefault = customEditorFont;
+}
+
+void Window::RenderImGui() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    ImGui::ShowDemoWindow();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Window::ShutdownImGui() {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+}
+
+bool Window::GetIsImguiHover() {
+    return isImguiHover = ImGui::IsAnyItemHovered() || ImGui::IsAnyItemActive();
 }

@@ -28,6 +28,13 @@ public:
     float deltaTime;
     float getDeltaTime() const;
     void updateDeltaTime();
+
+    void InitializeImGui();
+    void RenderImGui();
+    void ShutdownImGui();
+
+    bool isImguiHover;
+    bool GetIsImguiHover();
 };
 
 #endif //RACCOONENGINE_WINDOW_H
