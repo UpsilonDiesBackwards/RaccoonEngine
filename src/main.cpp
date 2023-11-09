@@ -25,7 +25,7 @@ int main () {
     Shader shader("/home/tayler/Projects/RaccoonEngine/assets/shaders/default.vert",
                   "/home/tayler/Projects/RaccoonEngine/assets/shaders/default.frag");
 
-    Viewport viewport(glm::vec3(0, 0, 3), glm::vec3(1, 1, 1), -90, 0);
+    Viewport viewport(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1), -90, 0);
 
     Shader shader("/home/tayler/Projects/RaccoonEngine/assets/shaders/default.vert",
                   "/home/tayler/Projects/RaccoonEngine/assets/shaders/default.frag");
@@ -58,7 +58,7 @@ int main () {
 
         viewport.processKeyboard(inputManager, window.getDeltaTime());
         viewport.processMouse(inputManager.getMouseX(), inputManager.getMouseY());
-//        std::cout << "X: " << inputManager.getMouseX()  << " Y: " << inputManager.getMouseY()<< "\n";
+        viewport.processScrollWheel(inputManager.getMouseY());
 
         if (inputManager.isKeyDown((GLFW_KEY_ESCAPE))) {
             glfwSetWindowShouldClose(window.GetGLFWWindow(), GLFW_TRUE);

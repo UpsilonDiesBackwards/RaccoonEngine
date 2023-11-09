@@ -9,6 +9,7 @@ Viewport::Viewport(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
     this->worldUp = up;
     this->yaw = yaw;
     this->pitch = pitch;
+    this->up = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
 glm::mat4 Viewport::getViewMatrix() {
@@ -43,36 +44,41 @@ void Viewport::processKeyboard(InputManager &inputManager, float deltaTime) {
     }
 }
 
-void Viewport::processMouse(float xOffset, float yOffset) {
-    xOffset *= sensitivity;
-    yOffset *= sensitivity;
+void Viewport::processMouse(double xpos, double ypos) {
+    if (firstMouse)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
 
-    yaw += xOffset;
-    pitch += yOffset;
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos;
+    lastX = xpos;
+    lastY = ypos;
 
-    // Screw gimbal-lock, all my homies hate gimbal lock
-    if (pitch > 89.0f) pitch = 89.0f;
-    if (pitch < -89.0f) pitch = -89.0f;
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
 
-    updateViewportVectors();
+    yaw   += xoffset;
+    pitch += yoffset;
+
+    if(pitch > 89.0f)
+        pitch = 89.0f;
+    if(pitch < -89.0f)
+        pitch = -89.0f;
+
+    glm::vec3 direction;
+    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    direction.y = sin(glm::radians(pitch));
+    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+
+    front = glm::normalize(direction);
+    right = glm::normalize(glm::cross(front, worldUp));
 }
 
 void Viewport::processScrollWheel(float yOffset) {
     if (zoom >= 1.0f && zoom <= 45.0f) zoom -= yOffset;
     if (zoom <= 1.0f) zoom = 1.0f;
     if (zoom >= 45.0f) zoom = 45.0f;
-}
-
-void Viewport::updateViewportVectors() {
-    glm::vec3 nFront;
-
-    nFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    nFront.y = sin(glm::radians(pitch));
-    nFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-
-    front = glm::normalize(nFront);
-    right = glm::normalize(glm::cross(front, worldUp));
-    up = glm::normalize(glm::cross(right, front));
-
-    std::cout << "y: " << yaw << " p: " << pitch << "\n" << "newfront: " << glm::to_string(nFront);
 }

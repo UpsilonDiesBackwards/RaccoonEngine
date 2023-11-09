@@ -14,9 +14,12 @@ private:
     glm::vec3 right;
     glm::vec3 worldUp;
 
-    float yaw, pitch;
+    float yaw;
+    float pitch;
 
     float moveSpeed, sensitivity, zoom;
+    bool firstMouse = true;
+    float lastX, lastY;
 public:
 
     Viewport(glm::vec3 position, glm::vec3 up, float yaw, float pitch);
@@ -24,9 +27,7 @@ public:
     glm::mat4 getViewMatrix();
 
     void processKeyboard(InputManager& inputManager, float deltaTime);
-    void processMouse(float xOffset, float yOffset);
+    void processMouse(double xpos, double ypos);
     void processScrollWheel(float yOffset);
-
-    void updateViewportVectors();
 };
 #endif /* ifndef  */
