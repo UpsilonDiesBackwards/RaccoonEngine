@@ -1,8 +1,14 @@
 #include <string>
 #include <deps/glad/glad.h>
+#include <iostream>
 #include "engine/window.h"
+#include "engine/utils/callbacks.h"
+#include "deps/imgui/imgui_impl_opengl3.h"
+#include "deps/imgui/imgui_impl_glfw.h"
+#include <iostream>
 
 Window::Window(const std::string& title) {
+    glfwSetErrorCallback(glfw_error_callback);
     glfwInit();
 
     GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -17,8 +23,11 @@ Window::Window(const std::string& title) {
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
-    
+
     aspectRatio = static_cast<float>(mode->width) / static_cast<float>(mode->height);
+    lastFrameTime = static_cast<float>(glfwGetTime());
+
+    isImguiHover = false;
 
     gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 }
@@ -27,13 +36,14 @@ Window::~Window() {
     glfwDestroyWindow(window);
     glfwTerminate();
 }
- 
+
 void Window::Render() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.19f, 0.28f, 0.27f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 bool Window::ShouldClose() {
+    glfwSetWindowCloseCallback(window, glfw_window_close_callback);
     return glfwWindowShouldClose(window);
 }
 
@@ -53,6 +63,16 @@ float Window::AspectRatio() {
     return aspectRatio;
 }
 
+void Window::updateDeltaTime() {
+    double currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrameTime;
+    lastFrameTime = currentFrame;
+}
+
+float Window::getDeltaTime() const {
+    return deltaTime;
+}
+
 glm::vec2 Window::DisplaySize() {
     int width, height;
     glfwGetWindowSize(window, &width, &height);
@@ -67,4 +87,37 @@ glm::vec2 Window::FrameBufferSize() {
 
 GLFWwindow* Window::GetGLFWWindow() {
     return window;
+}
+
+void Window::InitializeImGui() {
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+    ImFont* customEditorFont = io.Fonts->AddFontFromFileTTF("/home/tayler/Projects/RaccoonEngine/assets/fonts/retro_gaming/RetroGaming.ttf", 18);
+    io.FontDefault = customEditorFont;
+}
+
+void Window::RenderImGui() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    ImGui::ShowDemoWindow();
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Window::ShutdownImGui() {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+}
+
+bool Window::GetIsImguiHover() {
+    return isImguiHover = ImGui::IsAnyItemHovered() || ImGui::IsAnyItemActive();
 }
