@@ -4,10 +4,10 @@
 #include "engine/renderer/shader_compiler.h"
 #include "editor/viewport.h"
 
-model_renderer::model_renderer() : VAO(0), VBO(0), EBO(0) {
+ModelRenderer::ModelRenderer() : VAO(0), VBO(0), EBO(0) {
 }
 
-void model_renderer::Initialize() {
+void ModelRenderer::Initialize() {
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
@@ -28,7 +28,7 @@ void model_renderer::Initialize() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void model_renderer::Render(Gentry &gentry, Shader &shader, Viewport &viewport, glm::mat4 &projection) const {
+void ModelRenderer::Render(Gentry &gentry, Shader &shader, Viewport viewport, glm::mat4 &projection) const {
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"),
                        1, GL_FALSE, &projection[0][0]);
 

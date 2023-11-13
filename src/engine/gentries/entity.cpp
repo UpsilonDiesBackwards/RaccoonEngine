@@ -3,8 +3,7 @@
 #include <glm/gtx/string_cast.hpp>
 #include "glm/gtx/transform.hpp"
 
-Gentry::Gentry(const Transform& transform, const std::string& fPath, std::string& name) : name(
-        (std::string &) "Game Entity") {
+Gentry::Gentry(const Transform& transform, const std::string& fPath, std::string name) : name(name) {
     obj_loader objLoader(fPath);
     objLoader.Load();
 

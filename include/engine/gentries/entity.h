@@ -8,16 +8,16 @@
 #include "engine/utils/modelloaders/obj_loader.h"
 
 struct Transform {
-    glm::vec3 position = {10.0f, 0.0f, 0.0f};
+    glm::vec3 position = {0.0f, 0.0f, 10.0f};
     glm::vec3 eulerRotation = {1.0f, 1.0f, 1.0f};
     glm::vec3 scale = {1.0f, 1.0f, 1.0f};
 };
 
 class Gentry {
 public:
-    Gentry(const Transform& transform, const std::string& fPath, std::string& name);
+    Gentry(const Transform& transform, const std::string& fPath, std::string name);
 
-    std::string& name;
+    std::string name;
     Transform transform;
     std::vector<Mesh> meshes;
     glm::mat4 modelMatrix;

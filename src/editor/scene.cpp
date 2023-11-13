@@ -7,21 +7,22 @@
 #include <iostream>
 #include <sstream>
 
-scene::scene(const std::string& name) : name(name) { }
+Scene::Scene(const std::string& name) : name(name) { }
 
-void scene::AddEntity(const Gentry& entity) {
+void Scene::AddEntity(const Gentry& entity) {
+    std::cout << "\nAdding entity to scene: " << entity.name << std::endl;
     sceneEntities.push_back(entity);
 }
 
-const std::vector<Gentry>& scene::GetEntities() const {
+const std::vector<Gentry>& Scene::GetEntities() const {
     return sceneEntities;
 }
 
-const std::string& scene::GetName() const {
+const std::string& Scene::GetName() const {
     return name;
 }
 
-bool scene::SaveScene(const std::string& fName) const {
+bool Scene::SaveScene(const std::string& fName) const {
     rapidjson::Document doc;
     rapidjson::Value sceneData(rapidjson::kObjectType);
 
@@ -62,7 +63,7 @@ bool scene::SaveScene(const std::string& fName) const {
     return false;
 }
 
-void scene::LoadScene(const std::string& filePath) {
+void Scene::LoadScene(const std::string& filePath) {
     std::ifstream sceneFile(filePath);
 
     if(!sceneFile.is_open()) {

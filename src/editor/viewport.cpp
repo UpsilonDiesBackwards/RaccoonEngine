@@ -10,6 +10,7 @@ Viewport::Viewport(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
     this->yaw = yaw;
     this->pitch = pitch;
     this->up = glm::vec3(0.0f, 1.0f, 0.0f);
+    this->moveSpeedBuffer = moveSpeed;
 }
 
 glm::mat4 Viewport::getViewMatrix() {
@@ -39,9 +40,18 @@ void Viewport::processKeyboard(InputManager &inputManager, float deltaTime) {
         position += up * velocity;
     }
 
-    if (inputManager.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+    if (inputManager.isKeyPressed(GLFW_KEY_C)) {
         position -= up * velocity;
     }
+
+    if (inputManager.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+        isFlyingFaster = !isFlyingFaster;
+
+        if (isFlyingFaster) { moveSpeed *= 3; } else { moveSpeed = moveSpeedBuffer; }
+
+    }
+
+//    std::cout << "Position: " << glm::to_string(position) << "\n";
 }
 
 void Viewport::processMouse(double xpos, double ypos) {

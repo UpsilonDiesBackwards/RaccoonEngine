@@ -9,15 +9,15 @@ class Gentry;
 class Shader;
 class Viewport;
 
-class model_renderer {
+class ModelRenderer {
 private:
     unsigned int VAO;
     unsigned int VBO;
     unsigned int EBO;
 public:
-    model_renderer();
+    ModelRenderer();
     void Initialize();
-    void Render(Gentry &gentry, Shader &shader, Viewport &viewport, glm::mat4 &projection) const;
+    void Render(Gentry &gentry, Shader &shader, Viewport viewport, glm::mat4 &projection) const;
 };
 
 #endif //RACCOONENGINE_MODEL_RENDERER_H
