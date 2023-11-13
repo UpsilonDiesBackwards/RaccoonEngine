@@ -10,7 +10,6 @@
 Scene::Scene(const std::string& name) : name(name) { }
 
 void Scene::AddEntity(const Gentry& entity) {
-    std::cout << "\nAdding entity to scene: " << entity.name << std::endl;
     sceneEntities.push_back(entity);
 }
 

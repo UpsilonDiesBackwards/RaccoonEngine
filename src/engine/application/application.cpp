@@ -9,7 +9,7 @@
 #include "engine/renderer/shader_compiler.h"
 
 Application::Application() : mWindow("Raccoon Engine"),
-                        currentViewport(glm::vec3(0.0f, 0.0f, 0.0f),
+                        currentViewport(glm::vec3(0.0f, 0.0f, -3.0f),
                         glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f),
                         inputManager(InputManager::getInstance()) {
 
@@ -18,15 +18,9 @@ Application::Application() : mWindow("Raccoon Engine"),
     Rocket dRocket("Default Rocket");
 
     setCurrentRocket(dRocket);
-    std::cout << "\nNew rocket: " << dRocket.rocketName;
 
     Scene dScene("Default Scene");
     currentRocket.currentScene = dScene;
-
-    Transform transform1;
-    Gentry Tree(transform1, "/home/tayler/Projects/WhiskyEngine/assets/models/tree.obj", "Tree");
-
-    getCurrentRocket().getCurrentScene().AddEntity(Tree);
 }
 
 Application::~Application() { mWindow.Shutdown(); }
@@ -48,7 +42,7 @@ Viewport Application::getCurrentViewport() {
     return currentViewport;
 }
 
-ModelRenderer Application::getModelRenderer() {
+Model Application::getModelRenderer() {
     return MRenderer;
 }
 
@@ -87,10 +81,14 @@ int Application::applicationUpdate() {
     Shader shader("/home/tayler/Projects/RaccoonEngine/assets/shaders/default.vert",
                   "/home/tayler/Projects/RaccoonEngine/assets/shaders/default.frag");
 
-    glm::mat4 perspective = glm::perspective(glm::radians(45.0f), mWindow.AspectRatio(), 0.1f, 100.0f);
+    Transform t {
+            glm::vec3(2, 2, 2),
+            glm::vec3(1, 1, 1),
+            glm::vec3(2, 1, 1),
+    };
+    Gentry Tree(t, "/home/tayler/Projects/WhiskyEngine/assets/models/tree.obj", "Tree");
 
-    Transform transform1;
-    Gentry Tree(transform1, "/home/tayler/Projects/RaccoonEngine/assets/models/tree.obj", "Tree");
+    currentRocket.currentScene.AddEntity(Tree);
 
     while (!mWindow.ShouldClose()) {
         mWindow.updateDeltaTime();
@@ -99,7 +97,9 @@ int Application::applicationUpdate() {
 
         inputUpdate();
 
-        MRenderer.Render(Tree, shader, currentViewport, perspective);
+        for (Gentry e : currentRocket.currentScene.GetEntities()) {
+            MRenderer.Draw(e, shader, currentViewport);
+        }
 
         mWindow.RenderImGui();
 

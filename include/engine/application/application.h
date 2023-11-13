@@ -9,7 +9,7 @@
 #include "input_manager.h"
 #include "rocket.h"
 #include "editor/viewport.h"
-#include "engine/renderer/model_renderer.h"
+#include "engine/renderer/model.h"
 
 class Application {
 private:
@@ -21,18 +21,19 @@ public:
     void Initialise();
     int applicationUpdate();
     void inputUpdate();
+    void renderLoop();
 
     Window mWindow;
     Rocket currentRocket = Rocket("Default Rocket");
     InputManager& inputManager;
     Viewport currentViewport;
 
-    ModelRenderer MRenderer;
+    Model MRenderer;
 
     Window getWindow();
     Rocket getCurrentRocket();
     Viewport getCurrentViewport();
-    ModelRenderer getModelRenderer();
+    Model getModelRenderer();
 
     void setCurrentRocket(Rocket newRocket);
     void setCurrentViewport(Viewport newViewport);

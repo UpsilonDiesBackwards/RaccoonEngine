@@ -4,7 +4,7 @@
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp>
-#include "engine/renderer/model_renderer.h"
+#include "engine/renderer/model.h"
 #include "engine/utils/modelloaders/obj_loader.h"
 
 struct Transform {
@@ -15,13 +15,20 @@ struct Transform {
 
 class Gentry {
 public:
-    Gentry(const Transform& transform, const std::string& fPath, std::string name);
+    Gentry(Transform transform, const std::string& fPath, std::string name);
 
     std::string name;
     Transform transform;
     std::vector<Mesh> meshes;
     glm::mat4 modelMatrix;
     const glm::mat4* GenerateModelMatrix();
+
+    void SetPosition(glm::vec3 newPos);
+    void SetEulerRotation(glm::vec3 newERot);
+    void SetScale(glm::vec3 newScale);
+
+    void EulerRotate(glm::vec3 angles);
+    void Update(float deltaTime);
 };
 
 #endif // RACCOONENGINE_ENTITY_H

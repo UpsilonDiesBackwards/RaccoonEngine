@@ -25,7 +25,7 @@ add_executable(RaccoonEngine
         src/editor/scene.cpp
         src/engine/application/input_manager.cpp
         src/editor/viewport.cpp
-        src/engine/renderer/model_renderer.cpp
+        src/engine/renderer/model.cpp
         src/editor/imgui/imgui.cpp
         src/editor/imgui/imgui_demo.cpp
         src/editor/imgui/imgui_draw.cpp
