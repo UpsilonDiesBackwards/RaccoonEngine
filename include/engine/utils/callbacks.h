@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 
 static void glfw_error_callback(int error, const char* erroDesc) {
-    fprintf(stderr, "GLFW Error: %s\n", erroDesc);
+    std::cerr << "GLFW Error: " << erroDesc << std::endl;
     throw ("GLFW Error!");
 }
 

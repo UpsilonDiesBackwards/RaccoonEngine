@@ -2,7 +2,7 @@
 #define RACCOONENGINE_VIEWPORT_H
 
 #include <glm/glm.hpp>
-#include "engine/input_manager.h"
+#include "engine/application/input_manager.h"
 
 class InputManager;
 
@@ -17,9 +17,10 @@ private:
     float yaw;
     float pitch;
 
-    float moveSpeed, sensitivity, zoom;
+    float moveSpeed, moveSpeedBuffer , sensitivity, zoom;
     bool firstMouse = true;
     float lastX, lastY;
+    bool isFlyingFaster = false;
 public:
 
     Viewport(glm::vec3 position, glm::vec3 up, float yaw, float pitch);

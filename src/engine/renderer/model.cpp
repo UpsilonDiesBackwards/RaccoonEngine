@@ -1,13 +1,16 @@
-#include "engine/renderer/model_renderer.h"
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include "engine/renderer/model.h"
 #include "deps/glad/glad.h"
 #include "engine/gentries/entity.h"
 #include "engine/renderer/shader_compiler.h"
 #include "editor/viewport.h"
+#include "engine/application/application.h"
 
-model_renderer::model_renderer() : VAO(0), VBO(0), EBO(0) {
+Model::Model() : VAO(0), VBO(0), EBO(0) {
 }
 
-void model_renderer::Initialize() {
+void Model::Initialize() {
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
@@ -28,9 +31,12 @@ void model_renderer::Initialize() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void model_renderer::Render(Gentry &gentry, Shader &shader, Viewport &viewport, glm::mat4 &projection) const {
+Application app = Application::getApplicationInstance();
+void Model::Draw(Gentry &gentry, Shader &shader, Viewport viewport) const {
+    glm::mat4 perspective = glm::perspective(glm::radians(45.0f), app.mWindow.AspectRatio(), 0.1f, 100.0f);
+
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"),
-                       1, GL_FALSE, &projection[0][0]);
+                       1, GL_FALSE, &perspective[0][0]);
 
     glm::mat4 viewMatrix = viewport.getViewMatrix();
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "view"),

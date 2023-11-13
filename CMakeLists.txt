@@ -12,8 +12,8 @@ add_executable(RaccoonEngine
     src/main.cpp
     include/deps/glad/glad.h
     include/deps/glad/glad.c
-    include/engine/window.h
-    src/engine/windowing/window.cpp
+        include/engine/application/window.h
+        src/engine/application/window.cpp
         include/engine/renderer/shader_compiler.h
         src/engine/renderer/shader_compiler.cpp
         include/engine/utils/modelloaders/obj_loader.h
@@ -23,9 +23,9 @@ add_executable(RaccoonEngine
         src/engine/gentries/entity.cpp
         include/editor/scene.h
         src/editor/scene.cpp
-        src/engine/input_manager.cpp
+        src/engine/application/input_manager.cpp
         src/editor/viewport.cpp
-        src/engine/renderer/model_renderer.cpp
+        src/engine/renderer/model.cpp
         src/editor/imgui/imgui.cpp
         src/editor/imgui/imgui_demo.cpp
         src/editor/imgui/imgui_draw.cpp
@@ -42,6 +42,10 @@ add_executable(RaccoonEngine
         include/deps/imgui/imstb_rectpack.h
         include/deps/imgui/imstb_textedit.h
         include/deps/imgui/imstb_truetype.h
+        include/engine/application/application.h
+        include/engine/application/rocket.h
+        src/engine/application/rocket.cpp
+        src/engine/application/application.cpp
 )
 
 target_link_libraries(RaccoonEngine PRIVATE glfw assimp)

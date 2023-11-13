@@ -1,7 +1,7 @@
 #include <string>
-#include <deps/glad/glad.h>
+#include "deps/glad/glad.h"
 #include <iostream>
-#include "engine/window.h"
+#include "engine/application/window.h"
 #include "engine/utils/callbacks.h"
 #include "deps/imgui/imgui_impl_opengl3.h"
 #include "deps/imgui/imgui_impl_glfw.h"
@@ -20,6 +20,7 @@ Window::Window(const std::string& title) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+    glfwWindowHint(GLFW_SAMPLES, 4);
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
@@ -34,15 +35,21 @@ Window::Window(const std::string& title) {
 
 Window::~Window() {
     glfwDestroyWindow(window);
+}
+
+void Window::Shutdown() {
+    ShutdownImGui();
     glfwTerminate();
 }
 
 void Window::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.19f, 0.28f, 0.27f, 1.0f);
+
+    glEnable(GL_MULTISAMPLE);
 }
 
-bool Window::ShouldClose() {
+bool Window::ShouldClose() const {
     glfwSetWindowCloseCallback(window, glfw_window_close_callback);
     return glfwWindowShouldClose(window);
 }
@@ -59,7 +66,7 @@ void Window::SetSizeCallback(GLFWwindowsizefun callback) {
     glfwSetWindowSizeCallback(window, callback);
 }
 
-float Window::AspectRatio() {
+float Window::AspectRatio() const {
     return aspectRatio;
 }
 
@@ -106,7 +113,7 @@ void Window::RenderImGui() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::ShowDemoWindow();
+//    ImGui::ShowDemoWindow();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

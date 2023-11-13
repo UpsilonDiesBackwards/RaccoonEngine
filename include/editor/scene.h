@@ -3,12 +3,12 @@
 
 #include "engine/gentries/entity.h"
 
-class scene {
+class Scene {
 private:
     std::string name;
     std::vector<Gentry> sceneEntities;
 public:
-    scene(const std::string& name);
+    Scene(const std::string& name);
     void AddEntity(const Gentry& entity);
     const std::vector<Gentry>& GetEntities() const;
     const std::string& GetName() const;

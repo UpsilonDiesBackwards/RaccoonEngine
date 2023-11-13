@@ -1,4 +1,4 @@
-#include "engine/input_manager.h"
+#include "engine/application/input_manager.h"
 #include <GLFW/glfw3.h>
 
 InputManager::InputManager() {

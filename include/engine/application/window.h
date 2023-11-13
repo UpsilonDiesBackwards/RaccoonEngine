@@ -13,15 +13,16 @@ private:
 public:
     Window(const std::string& title);
     ~Window();
+    void Shutdown();
 
     void Render();
-    bool ShouldClose();
+    bool ShouldClose() const;
     void SwapBuffers();
     void PollEvents();
     void SetSizeCallback(GLFWwindowsizefun callback);
     GLFWwindow* GetGLFWWindow();
 
-    float AspectRatio();
+    float AspectRatio() const;
     glm::vec2 DisplaySize();
     glm::vec2 FrameBufferSize();
 
