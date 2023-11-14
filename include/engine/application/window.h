@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <string>
+#include "engine/gentries/light.h"
 
 class Window {
 private:
@@ -31,7 +32,7 @@ public:
     void updateDeltaTime();
 
     void InitializeImGui();
-    void RenderImGui();
+    void RenderImGui(Light &light);
     void ShutdownImGui();
 
     bool isImguiHover;

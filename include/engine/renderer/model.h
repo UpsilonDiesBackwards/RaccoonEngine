@@ -4,6 +4,7 @@
 #include <vector>
 #include <glm/fwd.hpp>
 #include "engine/utils/modelloaders/obj_loader.h"
+#include "engine/gentries/light.h"
 
 class Gentry;
 class Shader;
@@ -17,7 +18,7 @@ private:
 public:
     Model();
     void Initialize();
-    void Draw(Gentry &gentry, Shader &shader, Viewport viewport) const;
+    void Draw(Gentry &gentry, Shader &shader, Viewport viewport, Light* light) const;
 };
 
 #endif //RACCOONENGINE_MODEL_H

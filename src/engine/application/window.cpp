@@ -5,7 +5,9 @@
 #include "engine/utils/callbacks.h"
 #include "deps/imgui/imgui_impl_opengl3.h"
 #include "deps/imgui/imgui_impl_glfw.h"
+#include "engine/gentries/light.h"
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
 Window::Window(const std::string& title) {
     glfwSetErrorCallback(glfw_error_callback);
@@ -47,6 +49,7 @@ void Window::Render() {
     glClearColor(0.19f, 0.28f, 0.27f, 1.0f);
 
     glEnable(GL_MULTISAMPLE);
+    glEnable(GL_DEPTH_TEST);
 }
 
 bool Window::ShouldClose() const {
@@ -108,12 +111,45 @@ void Window::InitializeImGui() {
     io.FontDefault = customEditorFont;
 }
 
-void Window::RenderImGui() {
+void Window::RenderImGui(Light &light) {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
 //    ImGui::ShowDemoWindow();
+
+// Inside your rendering loop, ImGui controls go here
+    ImGui::Begin("Light Controls");
+
+    // Position
+    ImGui::Text("Position");
+    glm::vec3 position = light.getPosition();
+    ImGui::SliderFloat("X##Position", &position.x, -10.0f, 10.0f);
+    ImGui::SliderFloat("Y##Position", &position.y, -10.0f, 10.0f);
+    ImGui::SliderFloat("Z##Position", &position.z, -10.0f, 10.0f);
+
+    // Ambient
+    ImGui::Text("Ambient");
+    glm::vec3 ambientColor = light.getAmbient();
+    ImGui::ColorEdit3("Color##Ambient", &ambientColor[0]);
+
+    // Diffuse
+    ImGui::Text("Diffuse");
+    glm::vec3 diffuseColor = light.getDiffuse();
+    ImGui::ColorEdit3("Color##Diffuse", &diffuseColor[0]);
+
+    // Intensity
+    ImGui::Text("Intensity");
+    float intensity = light.getIntensity();
+    ImGui::SliderFloat("##Intensity", &intensity, 0.0f, 1.0f);
+
+    // Apply changes to the Light object
+    light.setPosition(position);
+    light.setAmbient(ambientColor);
+    light.setDiffuse(diffuseColor);
+    light.setIntensity(intensity);
+
+    ImGui::End();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -7,6 +7,7 @@
 #include "engine/application/application.h"
 #include "engine/gentries/entity.h"
 #include "engine/renderer/shader_compiler.h"
+#include "engine/gentries/light.h"
 
 Application::Application() : mWindow("Raccoon Engine"),
                         currentViewport(glm::vec3(0.0f, 0.0f, -3.0f),
@@ -57,7 +58,7 @@ void Application::setCurrentViewport(Viewport newViewport) {
 void Application::Initialise() {
     MRenderer.Initialize();
 
-    glfwSetInputMode(mWindow.GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+//    glfwSetInputMode(mWindow.GetGLFWWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     mWindow.InitializeImGui();
     applicationUpdate();
@@ -82,13 +83,21 @@ int Application::applicationUpdate() {
                   "/home/tayler/Projects/RaccoonEngine/assets/shaders/default.frag");
 
     Transform t {
-            glm::vec3(2, 2, 2),
+            glm::vec3(0, 0, 0),
             glm::vec3(1, 1, 1),
-            glm::vec3(2, 1, 1),
+            glm::vec3(1, 1, 1),
     };
-    Gentry Tree(t, "/home/tayler/Projects/WhiskyEngine/assets/models/tree.obj", "Tree");
+    Gentry Tree(t, "/home/tayler/Projects/RaccoonEngine/assets/models/tree.obj", "Tree");
 
     currentRocket.currentScene.AddEntity(Tree);
+
+    glm::vec3 position(1.0f, 2.0f, 3.0f);
+    glm::vec3 ambient(1.0f, 1.0f, 1.0f);
+    glm::vec3 diffuse(0.5f, 0.5f, 0.5f);
+    glm::vec3 specular(1.0f, 1.0f, 1.0f);
+    float intensity = 1.0f;
+
+    Light light(position, ambient, diffuse, specular, intensity, LightType::Point);
 
     while (!mWindow.ShouldClose()) {
         mWindow.updateDeltaTime();
@@ -98,10 +107,10 @@ int Application::applicationUpdate() {
         inputUpdate();
 
         for (Gentry e : currentRocket.currentScene.GetEntities()) {
-            MRenderer.Draw(e, shader, currentViewport);
+            MRenderer.Draw(e, shader, currentViewport, &light);
         }
 
-        mWindow.RenderImGui();
+        mWindow.RenderImGui(light);
 
         mWindow.PollEvents();
         mWindow.SwapBuffers();

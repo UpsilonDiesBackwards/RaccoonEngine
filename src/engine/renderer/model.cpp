@@ -1,11 +1,13 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "engine/renderer/model.h"
 #include "deps/glad/glad.h"
 #include "engine/gentries/entity.h"
 #include "engine/renderer/shader_compiler.h"
 #include "editor/viewport.h"
 #include "engine/application/application.h"
+#include "engine/gentries/light.h"
 
 Model::Model() : VAO(0), VBO(0), EBO(0) {
 }
@@ -32,7 +34,7 @@ void Model::Initialize() {
 }
 
 Application app = Application::getApplicationInstance();
-void Model::Draw(Gentry &gentry, Shader &shader, Viewport viewport) const {
+void Model::Draw(Gentry &gentry, Shader &shader, Viewport viewport, Light* light) const {
     glm::mat4 perspective = glm::perspective(glm::radians(45.0f), app.mWindow.AspectRatio(), 0.1f, 100.0f);
 
     glUniformMatrix4fv(glGetUniformLocation(shader.ID, "projection"),
@@ -54,6 +56,13 @@ void Model::Draw(Gentry &gentry, Shader &shader, Viewport viewport) const {
 
        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
+
+       glUniform3fv(glGetUniformLocation(shader.ID, "light.position"), 1, glm::value_ptr(light->getPosition()));
+       glUniform3fv(glGetUniformLocation(shader.ID, "light.ambient"), 1, glm::value_ptr(light->getAmbient()));
+       glUniform3fv(glGetUniformLocation(shader.ID, "light.diffuse"), 1, glm::value_ptr(light->getDiffuse()));
+       glUniform3fv(glGetUniformLocation(shader.ID, "light.specular"), 1, glm::value_ptr(light->getSpecular()));
+       glUniform1f(glGetUniformLocation(shader.ID, "light.intensity"), light->getIntensity());
+
 
        shader.Use();
 

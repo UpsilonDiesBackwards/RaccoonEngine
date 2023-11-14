@@ -46,6 +46,8 @@ add_executable(RaccoonEngine
         include/engine/application/rocket.h
         src/engine/application/rocket.cpp
         src/engine/application/application.cpp
+        include/engine/gentries/light.h
+        src/engine/gentries/light.cpp
 )
 
 target_link_libraries(RaccoonEngine PRIVATE glfw assimp)
